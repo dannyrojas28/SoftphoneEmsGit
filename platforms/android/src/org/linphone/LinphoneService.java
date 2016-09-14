@@ -58,7 +58,7 @@ import org.linphone.mediastream.Version;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import com.emsitelsoftphone.R;
+import com.emsitel.reventa.R;
 
 /**
  * 

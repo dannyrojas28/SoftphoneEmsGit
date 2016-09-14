@@ -96,7 +96,7 @@ console.log(nombre + " " +bandera)
                                   valor= print[1]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                   valor2= print[0]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                 }
-                                 precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#89B137;font-size:14px">Hoy</span><span style="color:#89B137"> '+valor2+' Min </span>';
+                                 precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#00457A;font-size:14px">Hoy</span><span style="color:#00457A"> '+valor2+' Min </span>';
                               }
                           console.log(nombre+' valor min. $'+precio);
                              imgBtn = '<img src="https://www.emsivoz.co/img/banderas-tarifas/'+bandera+'" style="width: 35px;height: 35px;" alt="" class="circle">';
@@ -203,7 +203,7 @@ console.log(nombre + " " +bandera)
                                   valor= print[1]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                   valor2= print[0]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                 }
-                                 precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#89B137;font-size:14px">Hoy</span><span style="color:#89B137"> '+valor2+' Min </span>';
+                                 precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#00457A;font-size:14px">Hoy</span><span style="color:#00457A"> '+valor2+' Min </span>';
                               }
                           console.log(nombre+' valor min. $'+precio);
                              imgBtn = '<img src="https://www.emsivoz.co/img/banderas-tarifas/'+bandera+'" style="width: 35px;height: 35px;" alt="" class="circle">';
@@ -285,7 +285,7 @@ console.log(nombre + " " +bandera)
 
                     //var $toastContent = $('<span>Llamada Finalizada</span>');
                    // Materialize.toast($toastContent, 3000);
-                   
+
                     clearInterval(interval);
                     localStorage.removeItem('sft_llamada');
                     localStorage.removeItem('sft_seg');
@@ -294,6 +294,7 @@ console.log(nombre + " " +bandera)
                     $('#telefono-contestado').css('display','none');
                     $('#colgado').val('true');
                     onTerminateCall();
+                    
                     var argument=$('#page').val();
                     if(argument != "index"){
                       ContenidoPrincipal(argument);
@@ -394,6 +395,8 @@ console.log(nombre + " " +bandera)
                     $('#colgado').val('true');
                     $('#telefono-contestado').css('display','none');
                     onTerminateCall();
+                    
+                     
                     var argument=$('#page').val();
                     if(argument != "index"){
                         ContenidoPrincipal(argument);
@@ -451,7 +454,7 @@ console.log(nombre + " " +bandera)
                                                     '<p style="font-size:16px;margin-top:10px" onclick="LlamarOtroMedio(\''+phone+'\')" >'+phone+'</p>'+
                                                  '</div>'+
                                                 '<div class="col s2">'+
-                                                  '<a onclick="LlamarOtroMedio(\''+phone+'\')" class="secondary-content btn-floating btnllam" style="background:#89B137;margin-top:3px"><i class="material-icons"><i class="material-icons" style="color:#fff;font-size:24px;">&#xE0CD;</i></i></a>'+
+                                                  '<a onclick="LlamarOtroMedio(\''+phone+'\')" class="secondary-content btn-floating btnllam" style="background:#00457A;margin-top:3px"><i class="material-icons"><i class="material-icons" style="color:#fff;font-size:24px;">&#xE0CD;</i></i></a>'+
                                                 '</div>'+
                                             '</div>';
                            }
@@ -542,7 +545,7 @@ console.log(nombre + " " +bandera)
                                                 valor= print[2]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                                 valor2= print[0]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                               }
-                                               precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#89B137;font-size:14px">Hoy</span><span style="color:#89B137"> '+valor2+' Min </span>';
+                                               precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#00457A;font-size:14px">Hoy</span><span style="color:#00457A"> '+valor2+' Min </span>';
                                             }
                                           }else{
                                             if(print[1]['precio'] == print[3]['precio']){
@@ -560,7 +563,7 @@ console.log(nombre + " " +bandera)
                                                   valor= print[3]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                                   valor2= print[1]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                                 }
-                                               precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#89B137;font-size:14px">Hoy</span><span style="color:#89B137"> '+valor2+' Min </span>';
+                                               precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#00457A;font-size:14px">Hoy</span><span style="color:#00457A"> '+valor2+' Min </span>';
                                             }
                                           }
                                         console.log(nombre+' valor min. $'+precio);
@@ -580,7 +583,7 @@ console.log(nombre + " " +bandera)
                    //cargar historial de llamadas
                     console.log(localStorage.getItem('htmlHistori') );
                     $('#historial').html(localStorage.getItem('htmlHistori'));
-                    var parametro={'session':localStorage.getItem('sft_sessioncard')};
+                    var parametro={'session':localStorage.getItem('sft_sessioncard'),'sessiontel':localStorage.getItem('sft_session')};
                     $.ajax({
                         data:parametro,
                         type:"POST",
@@ -594,7 +597,7 @@ console.log(nombre + " " +bandera)
                                   tiempo = print[i]['tiempo'];
                                   precio = print[i]['precio'];
                                   if(print[i]['tiempo'] != '00:00:00'){
-                                      color="color:#89B137;";
+                                      color="color:#00457A;";
                                       icon ="&#xE0B2;";
                                   }else{
                                       color="color:#ED565A;";
@@ -616,7 +619,7 @@ console.log(nombre + " " +bandera)
                                                             '<span style="font-size:18px;font-weight:bold">'+valor+'</span>'+
                                                         '</div>'+
                                                         '<div class="col s2"> '+
-                                                            '<a onclick="LlamarOtroMedio(\''+ko+'\')" class="secondary-content btn-floating right btnllam" style="background:#89B137;margin-top:13px;width:44px;height:44.5px"><i class="material-icons" style="color:#fff;font-size:28px;line-height:44px">&#xE0CD;</i></a>'+
+                                                            '<a onclick="LlamarOtroMedio(\''+ko+'\')" class="secondary-content btn-floating right btnllam" style="background:#00457A;margin-top:13px;width:44px;height:44.5px"><i class="material-icons" style="color:#fff;font-size:28px;line-height:44px">&#xE0CD;</i></a>'+
                                                         '</div>'+
                                                       '</div>');
                                   if((i - 1) == (print.length - 1)){

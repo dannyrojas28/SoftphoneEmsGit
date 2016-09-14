@@ -66,7 +66,7 @@ import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import com.emsitelsoftphone.R;
+import com.emsitel.reventa.R;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;

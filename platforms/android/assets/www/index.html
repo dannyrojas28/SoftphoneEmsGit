@@ -30,11 +30,10 @@
         -->
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+       <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1, maximum-scale=1">
 
            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <meta http-equiv="x-ua-compatible" content="ie=edge">
+          <meta http-equiv="x-ua-compatible" content="ie=edge">
 
             <title>APP SFT</title>
             <link rel="stylesheet" type="text/css" href="css/teclado.css">
@@ -179,7 +178,7 @@
 
 
         <div id="inicio" style="display:none">
-               <div class="navbar-fixed" id="nav" style="background:#ecedef;">
+               <div class="navbar-fixed" id="nav" style="background:#ecedef;position:fixed">
                     <div class=" row" >
 
                         <div class="col s4  psl" style="border-right:1px solid #ADACB2;margin-top:13px" id="loc" onclick="Contenido('teclado')">
@@ -273,7 +272,7 @@
                                                           </div>
                                                         <div class="col s12"></div>
                                                         <div class="col s12">
-                                                              <a class="btn-large modal-action modal-close btnllam"  style="background:#89B137;color:#fff;font-size:18px;letter-spacing:0;margin-top:10px;margin-bottom:10px;height: 45px;line-height: 42px;padding: 0 1rem;width:98%;border-radius:8px" onclick="Llamar()" >
+                                                              <a class="btn-large modal-action modal-close btnllam"  style="background:#00457A;color:#fff;font-size:18px;letter-spacing:0;margin-top:10px;margin-bottom:10px;height: 45px;line-height: 42px;padding: 0 1rem;width:98%;border-radius:8px" onclick="Llamar()" >
                                                                 <i class="material-icons" style="color:#fff;font-size:40px;font-weight:bold;">&#xE0CD;</i> 
                                                               </a>
                                                         </div>
@@ -302,6 +301,7 @@
                         <input   type="hidden" id="page" value="index">  
                         <input   type="hidden" id="registrado" value="0">
                         <input   type="hidden" id="parlante_act" value="0">
+                        <input   type="hidden" id="cella" value="0">
                         <input   type="hidden" id="espacio_blanco" value="&nbsp;">
                     </div>
                         <script type="text/javascript" src="js/llamar.js"></script> 
@@ -506,13 +506,16 @@
                            
                       </script>
                 </div>
-                <div id="historial" class="cols" style="display:none">
-                        <p>Historial</p>
+                <div class="row"> 
+                <br><br><br><br><br>
+                    <div id="historial"  style="margin-top:25px;display:none" class="row cols">
+                          
+                    </div>
                 </div>
         </div>
         <div class="row" id="telefono-contestado" style="position:fixed;width:100%;height:100%;top:0;left:0;z-index:100000;background:white;display:none">
             <center>
-                <div style="width:100%;background:#89B137;margin-top:20px" id="palabraDF" class="col s12">
+                <div style="width:100%;background:#00457A;margin-top:20px" id="palabraDF" class="col s12">
                     
                 </div>
                 <div class="col s12" id="p_valor" style="margin-top:5px"></div>

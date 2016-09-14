@@ -23,7 +23,7 @@ import org.linphone.mediastream.Log;
 
 import java.util.ArrayList;
 
-import com.emsitelsoftphone.R;
+import com.emsitel.reventa.R;
 
 /*
 ApiElevenPlus.java

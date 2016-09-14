@@ -38,7 +38,7 @@ import org.linphone.core.LpConfig;
 import org.linphone.core.TunnelConfig;
 import org.linphone.mediastream.Log;
 
-import  com.emsitelsoftphone.R;
+import  com.emsitel.reventa.R;
 
 /**
  * @author Sylvain Berfini

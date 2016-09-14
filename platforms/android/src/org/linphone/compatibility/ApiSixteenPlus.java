@@ -10,7 +10,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 import com.techstorm.Constants;
 
-import com.emsitelsoftphone.R;
+import com.emsitel.reventa.R;
 
 /*
 ApiSixteenPlus.java

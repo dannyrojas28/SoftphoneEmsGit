@@ -9,6 +9,9 @@
 function Contenido(argument){
     $('.cols').css('display','none');
     $('#'+argument).css('display','block');
+    if(argument == "historial"){
+        Historial();
+    }
 }
  /*Esta funcion permite cargar los contenidos a mostrar*/
     /**/
@@ -217,7 +220,7 @@ function FiltrarPrecioLlamar(){
                                   valor= print[1]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                   valor2= print[0]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                 }
-                                 precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#89B137;font-size:14px">Hoy</span><span style="color:#89B137"> '+valor2+' Min </span>';
+                                 precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#00457A;font-size:14px">Hoy</span><span style="color:#00457A"> '+valor2+' Min </span>';
                               }
                   console.log(nombre+' valor min. $'+precio);
                   $('#btn-borr').html('<h5 id="no-tap-delayd" class="html5logo material-icons right" style="color:#ADACB2;margin-top:12px;font-size:32px;">&#xE14A;</h5>');
@@ -277,7 +280,7 @@ function Colombia(){
                                   valor= print[1]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                   valor2= print[0]['precio'] + " "+ localStorage.getItem('sft_moneda');
                                 }
-                                 precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#89B137;font-size:14px">Hoy</span><span style="color:#89B137"> '+valor2+' Min </span>';
+                                 precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#00457A;font-size:14px">Hoy</span><span style="color:#00457A"> '+valor2+' Min </span>';
                               }
                   console.log(nombre+' valor min. $'+precio);
                    $('#connect').html(imgBTn+'<span class="conPais">'+nombre+'</span>'+precio);
@@ -337,7 +340,7 @@ function ValorLlamada(numero){
                         valor= print[1]['precio'] + " "+ localStorage.getItem('sft_moneda');
                         valor2= print[0]['precio'] + " "+ localStorage.getItem('sft_moneda');
                       }
-                      precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#89B137;font-size:14px">Hoy</span><span style="color:#89B137"> '+valor2+' Min </span>';
+                      precio='<span style="color:#ADACB2;font-size:14px"><del> '+valor+'</del> |</span><span style="color:#00457A;font-size:14px">Hoy</span><span style="color:#00457A"> '+valor2+' Min </span>';
                   }
                   bandera = print[0]['bandera'];
           }
@@ -404,7 +407,7 @@ function ShowSaldo(){
                                   $('#palabraD').css('background','#ED565A');
                                   $('#goodD').css('color','#fff');
                                }else{
-                                  $('#palabraD').css('background','#89B137');
+                                  $('#palabraD').css('background','#00457A');
                                   $('#goodD').css('color','#fff');
                                }
                                 if(localStorage.getItem('sft_moneda') == "$"){

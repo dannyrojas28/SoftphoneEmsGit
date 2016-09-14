@@ -1,6 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">SoftphoneEmsitel</string>
+    <string name="app_name">Reventa Emsivoz</string>
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
+    <string name="google_app_id">424525287571</string>
+    <string name="sip_active_title">Emsivoz Activo</string>
+    <string name="sip_active_ticker">Emsivoz Activo</string>
+    <string name="sip_active_content">Tocar para abrir el teléfono</string>
+    <string name="sip_inactive_title">Emsivoz Inactivo</string>
+    <string name="sip_inactive_ticker">Emsivoz Inactivo</string>
+    <string name="sip_inactive_content">Emsivoz para abrir el teléfono</string>
 </resources>

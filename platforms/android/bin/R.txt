@@ -13,7 +13,14 @@ int raw ringback 0x7f040006
 int raw rootca 0x7f040007
 int string activity_name 0x7f050004
 int string app_name 0x7f050002
+int string google_app_id 0x7f050005
 int string launcher_name 0x7f050003
+int string sip_active_content 0x7f050008
+int string sip_active_ticker 0x7f050007
+int string sip_active_title 0x7f050006
+int string sip_inactive_content 0x7f05000b
+int string sip_inactive_ticker 0x7f05000a
+int string sip_inactive_title 0x7f050009
 int string sync_account_type 0x7f050000
 int string sync_mimetype 0x7f050001
 int xml authenticator 0x7f030000

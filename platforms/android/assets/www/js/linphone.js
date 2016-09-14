@@ -36,10 +36,17 @@ var join= {
 join.initialize();
 function Onload(){
    // alert("listo");
+   setTimeout(function(){
+      cordova.plugins.diagnostic.requestMicrophoneAuthorization(function(status){
+         console.log("Microphone access is: "+status);              
+        }, function(error){
+      }); 
+   },1000);
+   
     var mySip;
-              var interval;
-              var options;
-              var rf= false;                   
+    var interval;
+    var options;
+    var rf= false;                   
                    // document.getElementById('refresh').innerHTML='<i><span style="top:30px;font-size:35px;" class="material-icons"  onclick="Contenido(\'inicio.html\')">&#xE317;</span></i>';
                       if(localStorage.getItem('sft_llamada') != null){
                            $('#telefono-contestado').css('display','block');
@@ -133,22 +140,21 @@ function Onload(){
         }
 
         function onCall(cel){
-            cordova.plugins.diagnostic.requestMicrophoneAuthorization(function(status){
-                      console.log("Microphone access is: "+status);
-                    
-                    }, function(error){
-            }); 
+            
+            console.log(cel+"@sip.emsivoz.co => "+localStorage.getItem('sft_session'));
                     Linphone.makeCall(
                         cel,
                         'sip.emsivoz.'+localStorage.getItem('sft_server'),
                         cel,
                         function(id) {
+                          $('#cella').val(cel);
                             var num= $('#number').html();
                             $('#num-llama').html(num);
                             $('#telefono-contestado').css('display','block');
                             $('#palabraDF').html($('#palabraD').html());
-                            console.log("salio la llamada")
+                            console.log("salio la llamada" + cel)
                             onDisableSpeakerClick();
+                           
                             //alert('CALLING');
                         },
                         function(e){
@@ -206,13 +212,28 @@ function Onload(){
                 });
         }
         function onTerminateCall() {
+           cel = $('#cella').val();
+            console.log('pppppppppppppp ' + cel +"--" + localStorage.getItem('sft_cel')+"--" +localStorage.getItem('sft_session'));
+            param = {'src':localStorage.getItem('sft_cel'),'destination':cel,'id_did':localStorage.getItem('sft_session')};
+            $.ajax({
+                    data:param,
+                    type:'POST',
+                    url:'https://app.emsivoz.'+localStorage.getItem('sft_server')+'/Sotfphone/php/controlls/ctrApp_StateCall.php',
+                    success:function(data){
+                      console.log('pppppppppppppp ' + cel +"--" + localStorage.getItem('sft_cel')+"--" +localStorage.getItem('sft_session'));
+                      console.log("aaa"+ data);
+                    }
+            });
+
             Linphone.terminateCall(
                 function(id) {
                     $('#telefono-contestado').css('display','none');
                     //onDeregister();
                     //alert('TERMINATED CALL');
+
                 });
         }
+
         function onMuteCallClick() {
             Linphone.muteCall(
                 function(id) {
@@ -315,7 +336,7 @@ function Onload(){
                         }else{
                             if(data.state == "RegistrationOk"){
                              console.log("SE CAMBIO EL COLOR A VERDE")
-                             $('#palabraD').css('background','#89B137');
+                             $('#palabraD').css('background','#00457A');
                              $('#goodD').css('color','#fff');
                              ShowSaldo();
                             }
