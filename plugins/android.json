@@ -1,0 +1,48 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "com.techstorm.linphone": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "org.awokenwell.proximity": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.emsitelsoftphone"
+        }
+    },
+    "dependent_plugins": {}
+}

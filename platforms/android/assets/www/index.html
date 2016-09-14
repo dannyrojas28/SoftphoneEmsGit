@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+           <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+            <title>APP SFT</title>
+            <link rel="stylesheet" type="text/css" href="css/teclado.css">
+            <link rel="stylesheet" type="text/css" href="css/style.css">
+            <link href="css/icons.css" rel="stylesheet">
+            <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+            <link rel="stylesheet" href="css/animate.css"><link rel="stylesheet" href="css/materialdesign.css">
+            <script type="text/javascript" src="js/jquery.js" ></script>
+            <script type="text/javascript" src="js/functions.js"></script>
+            <script type="text/javascript" src="js/login.js"></script>
+            <script type="text/javascript" src="cordova.js"></script>
+            <script src="js/materialdesig.js"></script>
+            <script src="js/materialize.js"></script>
+            <script src="js/init.js"></script>
+            <script type="text/javascript">
+                    console.log(localStorage.getItem('sft_session'))
+                    setTimeout(function(){
+                      if(localStorage.getItem('sft_session') == null){
+                        console.log(313)
+                          $('#login').css('display','block');
+                      }else{
+                          $('#inicio').css('display','block');
+                      }
+                    },100);
+                function onDeviceReady() {
+                  checkConnection();
+                }
+                function checkConnection() {
+                   var networkState = navigator.connection.type;
+                   if(networkState == Connection.NONE){
+                        navigator.notification.alert('No Tienes Conexion a Internet', alertCallback, "Fail", "Aceptar");
+                         $('#fade').css('display','block');
+                         $('#carga2').css('display','none');
+                   }
+                }
+            </script>
+        <title>Softphone</title>
+    </head>
+    <body>
+        <!--
+            DIV DE CARGA DE LA <APPLET></APPLET>
+        -->
+        <div id="carga">
+        </div>
+
+
+        <!--
+             DIV PARA REALIZAR EL LOGIN EN LA APP
+        -->
+        <div id="login" style="display:none">
+             <div  id="logoB" style="background:#00457A;width:100%;height:109px">
+                    <br><br>
+                    <center><span style="color:#FFF;font-size:40px;margin-top:-20px">REVENTA</span> </center>
+              </div>
+              <div style="width:100%;height:10px;background:#FFF535;"></div>
+              <div id="fade" >
+                <form method="post" name="formulario1" class="formulario1" >
+                  <div class="row">
+                    <br>
+                        <center>
+                            <h4 style="color:#808385">
+                                <span style="margin:2px">I</span>
+                                <span style="margin:2px">N</span>
+                                <span style="margin:2px">I</span>
+                                <span style="margin:2px">C</span>
+                                <span style="margin:2px">I</span>
+                                <span style="margin:2px">A</span>
+                                <span style="margin:2px">R</span>
+                                <span style="margin:14px">S</span>
+                                <span style="margin:2px">E</span>
+                                <span style="margin:2px">S</span>
+                                <span style="margin:2px">I</span>
+                                <span style="margin:2px">Ó</span>
+                                <span style="margin:2px">N</span>
+                            </h4>
+                        </center>
+                        <hr>
+                    <center>
+                      <div id="gh" style="color:red"></div>
+                    </center> 
+                    <div class="col s12 m6 offset-m3 l4 offset-l4" >
+                      <div class="input-field col s10 offset-s1 input"> 
+                          <i class="iconIn material-icons  prefix usuario validate " id="icoUser" name="icoUser" style="color:#AAAEB0;font-size: 2.5em">&#xE853;</i>
+                          <input id="user" type="text" name="user" class="validate" placeholder="Celular" style="border:none">
+                          <label for="usuario"  data-error="" data-success=""></label>
+                      </div>
+                      <div class="input-field col s10 offset-s1 input">
+                          <i class="iconIn material-icons  prefix pass validate" id="icoPass" name="icoPass" style="color:#AAAEB0;font-size: 2.5em"> &#xE897;</i>
+                        <div class="col s10">
+                          <input type="password" placeholder="Contraseña"  name="pass" id="pass" style="border:none;margin-left:30px;">
+                          <input type="hidden" id="verpass" value="0">
+                        </div>
+                        <div class="col s1" id="ocultarPass">
+                          <i class="material-icons  iconIn prefix " onclick="verPassDos()"  style="color:#AAAEB0"> &#xE8F4;</i>
+                        </div>
+                      </div>
+
+                      <center>
+                              <a class="btn-floating btn-large waves-effect waves-light" style="background:#00457A;color:#fff;margin-top:30px" onClick="javascript:Login()"><i class="material-icons">&#xE163;</i></a>
+                      </center>
+                    </div> 
+                  </div>
+                </form>
+              </div>
+
+
+                <div id="login_telefonos" style="display:none">
+                   <div class="row">
+                    <br>
+                        <center>
+                            <h5 style="color:#808385">
+                                Selecciona un Celular Disponible
+                            </h5>
+                        </center>
+                        <hr>
+                        <div id="sl"> </div>
+                        <center><div id="fh" style="color:red;display:none">Debes seleccionar un Numero</div></center> 
+                        <center>
+                              <a class="btn-floating btn-large waves-effect waves-light" style="background:#00457A;color:#fff;margin-top:30px" onClick="javascript:SelectNumber()"><i class="material-icons">&#xE876;</i></a>
+                      </center>
+                    </div>         
+                </div>
+               <div id="carga2" style="display:none">
+                <div style="margin-top:30%">
+                    <center>
+                         <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-green-only">
+                              <div class="circle-clipper left">
+                                <div class="circle"></div>
+                              </div><div class="gap-patch">
+                                <div class="circle"></div>
+                              </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                              </div>
+                            </div>
+                          </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="inicio" style="display:none">
+               <div class="navbar-fixed" id="nav" style="background:#ecedef;">
+                    <div class=" row" >
+
+                        <div class="col s4  psl" style="border-right:1px solid #ADACB2;margin-top:13px" id="loc" onclick="Contenido('teclado')">
+                           <center><img src="img/btn-llam.png" class="img-btn" style="width:70% !important;margin:0 auto"></center> 
+                        </div>
+                        <div class="col s4 psl"  style="border-right:1px solid #ADACB2;margin-top:13px" id="btn-ll" onclick="Contenido('historial')"> 
+                            <center> <img src="img/btn-hist.png" class="img-btn" style="width:70% !important; "></center> 
+                        </div>
+                        <div class="col s4 psl"  style="margin-top:13px" id="eve" >
+                            <center> <img src="img/btn-cerr.png"   class="img-btn" style="width:70% !important;" onclick="CerrarSession()"></center> 
+                        </div>
+
+                        
+                          <div style="width:100%;background:#00457A;margin-top:10px;" id="palabraD" class="col s12">
+                              <p style='color:#fff;text-align:center;' id="goodD">Juan</p>
+                          </div>
+                        <div id="barraGD"></div>
+                        <div id="barraD"></div>
+                    </div>
+                </div>
+                <div id="teclado" class="cols">
+                     <div id="micont">
+                              <!-- MODAL QUE MUESTRA UN SELECT CON LOS PAISES PARA SELECCIONAR UNA TARIFA-->
+                              <div id="modal8" class="modal modal-fixed-footer" style="height: 200px;width: 70%;text-align: center;margin: auto;margin-top:20%;">
+                                  <div class="modal-content" id="paises">
+                                  </div>
+                                  <div class="modal-footer">
+                                       <center>
+                                        <a href="#!" class=" modal-action modal-close waves-green red btn" style="border-radius:8px;background:#C90000;float:none;font-size:18px">Cancelar</a>
+                                      </center>
+                                  </div>
+                              </div>
+
+                              <!-- PANTALLA CON EL DISCADOR -->
+                              <div class="app" >
+                                  <div class="row" id="telefono-llamar">  
+                                      <div class="fixed-action-btn" style="bottom: 0;background:#fff32;width:100%;float: bottom;">
+                                            <center> 
+                                              <div  onclick="OpenMod()">
+                                                <p style="font-size:18px;color:#4470B4;margin:0px" id="connect"> <a class="btn-floating blue"> <i class="material-icons">&#xE8B4;</i></a></p>
+                                              </div>
+                                            </center>
+                                            <div class="col s11" style="text-align: center;">
+                                              <span id="number" style="color:#424242 ;margin-left:5px;display:inline-block;margin-top: 10px;font-size: 34px"></span> 
+                                            </div>
+                                            <div class="col s1"  id="btn-borr">
+                                              <h5 class="material-icons right" style="color:transparent;margin-top:12px;font-size:32px;" onclick="BorrarNumero();" onkeypress="BorrarNumero();">&#xE14A;</h5>
+                                            </div>
+                                          <div id="teclado"  class="col s12" style="">
+                                              <center>
+                                                  <div class="col s12">
+                                                    <div class="num-pad">
+                                                         <div id="no-tap-delay1" class="html5logo col s4" >
+                                                            <img src="img/1.png" class="img-responsive img-cir" >
+                                                        </div>
+                                                          <div id="no-tap-delay2" class="html5logo col s4" >
+                                                             <img src="img/2.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div id="no-tap-delay3" class="html5logo col s4">
+                                                              <img src="img/3.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div class="col s12"></div>
+                                                          <div id="no-tap-delay4" class="html5logo col s4" style="margin-top:5px">
+                                                              <img src="img/4.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div id="no-tap-delay5" class="html5logo col s4" style="margin-top:5px">
+                                                              <img src="img/5.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div id="no-tap-delay6" class="html5logo col s4"  style="margin-top:5px">
+                                                              <img src="img/6.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div class="col s12"></div> 
+                                                          <div id="no-tap-delay7" class="html5logo  col s4" style="margin-top:5px">
+                                                             <img src="img/7.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div id="no-tap-delay8" class="html5logo  col s4" style="margin-top:5px">
+                                                              <img src="img/8.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div id="no-tap-delay9" class="html5logo  col s4" style="margin-top:5px">
+                                                              <img src="img/9.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div class="col s12"></div>
+                                                          <div id="no-tap-delaya" class="html5logo col s4" style="margin-top:5px">
+                                                              <img src="img/x.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div id="no-tap-delay0" class="html5logo col s4" style="margin-top:5px">
+                                                              <img src="img/0.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                          <div id="no-tap-delayn" class="html5logo col s4" style="margin-top:5px">
+                                                               <img src="img/nu.png" class="img-responsive img-cir" >
+                                                          </div>
+                                                        <div class="col s12"></div>
+                                                        <div class="col s12">
+                                                              <a class="btn-large modal-action modal-close btnllam"  style="background:#89B137;color:#fff;font-size:18px;letter-spacing:0;margin-top:10px;margin-bottom:10px;height: 45px;line-height: 42px;padding: 0 1rem;width:98%;border-radius:8px" onclick="Llamar()" >
+                                                                <i class="material-icons" style="color:#fff;font-size:40px;font-weight:bold;">&#xE0CD;</i> 
+                                                              </a>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                              </center>
+                                          </div>
+                                      </div>
+                                  </div>       
+                              </div>
+
+                                 </div>
+                <!-- INPUTS HIDDEN QUE SE UTILIZAN PARA GUARDAR VALORES AL REALIZAR UNA LLAMADA -->
+                    <div id='lio'>
+                        <input   type="hidden" id="minutos"  value="00">
+                        <input   type="hidden" id="segundos" value="00">
+                        <input   type="hidden" id="horas"    value="00">
+                        <input   type="hidden" id="esta"    value="inicio">
+                        <input   type="hidden" id="colgado" value="false">
+                        <input   type="hidden" id="contas_load" value="1">
+                        <input   type="hidden" id="numero-llam" value="">
+                        <input   type="hidden" id="dtmf_key" name="dtmf_key"  value="0">
+                        <input   type="hidden" id="salir" value="1">  
+                        <input   type="hidden" id="llamar-contact" value="0">  
+                        <input   type="hidden" id="call_esta" value="0">  
+                        <input   type="hidden" id="page" value="index">  
+                        <input   type="hidden" id="registrado" value="0">
+                        <input   type="hidden" id="parlante_act" value="0">
+                        <input   type="hidden" id="espacio_blanco" value="&nbsp;">
+                    </div>
+                        <script type="text/javascript" src="js/llamar.js"></script> 
+                        <script type="text/javascript" src="js/linphone.js"></script> 
+                        <script type="text/javascript" src="js/flatclick.js"></script> 
+                        <script type="text/javascript">
+                             document.addEventListener('DOMContentLoaded', function() {
+                                            FastClick.attach(document.body);
+                             }, false);
+                            $(document).ready(function(){
+
+                                $.event.special.tap = {
+                                  // Abort tap if touch moves further than 10 pixels in any direction
+                                  distanceThreshold: 10,
+                                  // Abort tap if touch lasts longer than half a second
+                                  timeThreshold: 200,
+                                  setup: function() {
+                                    var self = this,
+                                      $self = $(self);
+
+                                    // Bind touch start
+                                    $self.on('touchstart', function(startEvent) {
+                                      // Save the target element of the start event
+                                      var target = startEvent.target,
+                                        touchStart = startEvent.originalEvent.touches[0],
+                                        startX = touchStart.pageX,
+                                        startY = touchStart.pageY,
+                                        threshold = $.event.special.tap.distanceThreshold,
+                                        timeout;
+
+                                      function removeTapHandler() {
+                                        clearTimeout(timeout);
+                                        $self.off('touchmove', moveHandler).off('touchend', tapHandler);
+                                      };
+
+                                      function tapHandler(endEvent) {
+                                        removeTapHandler();
+
+                                        // When the touch end event fires, check if the target of the
+                                        // touch end is the same as the target of the start, and if
+                                        // so, fire a click.
+                                        if (target == endEvent.target) {
+                                          $.event.simulate('tap', self, endEvent);
+                                        }
+                                      };
+
+                                      // Remove tap and move handlers if the touch moves too far
+                                      function moveHandler(moveEvent) {
+                                        var touchMove = moveEvent.originalEvent.touches[0],
+                                          moveX = touchMove.pageX,
+                                          moveY = touchMove.pageY;
+
+                                        if (Math.abs(moveX - startX) > threshold ||
+                                            Math.abs(moveY - startY) > threshold) {
+                                          removeTapHandler();
+                                        }
+                                      };
+
+                                      // Remove the tap and move handlers if the timeout expires
+                                      timeout = setTimeout(removeTapHandler, $.event.special.tap.timeThreshold);
+
+                                      // When a touch starts, bind a touch end and touch move handler
+                                      $self.on('touchmove', moveHandler).on('touchend', tapHandler);
+                                    });
+                                  }
+                                };
+
+                                $('#no-tap-delay1').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                Numero('1');
+                                });
+                                $('#no-tap-delay2').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                 Numero('2');
+
+                                });
+                                $('#no-tap-delay3').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                  Numero('3');
+
+                                });
+                                $('#no-tap-delay4').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                  Numero('4');
+
+                                });
+                                $('#no-tap-delay5').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                  Numero('5');
+
+                                });
+                                $('#no-tap-delay6').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                 Numero('6');
+
+                                });
+                                $('#no-tap-delay7').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                 Numero('7');
+
+                                });
+                                $('#no-tap-delay8').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                  Numero('8');
+
+                                });
+                                $('#no-tap-delay9').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                Numero('9');
+                                });
+                                $('#no-tap-delay0').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                Numero('0');
+                                });
+                                $('#no-tap-delaya').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                  Numero('*');
+                                });
+                                $('#no-tap-delayn').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                  Numero('#');
+                                });
+                                $('#btn-borr').on('tap', function() {
+                                  var $self = $(this);
+                                  $self.one('webkitAnimationEnd', function() {
+                                    $self.removeClass('pulse');
+                                  }).addClass('pulse');
+                                  BorrarNumero();
+                                });
+                            });
+                        </script>
+                        <script type="text/javascript">
+                        $(document).ready(function(){
+                            if(localStorage.getItem('sft_session') != null){
+                                    setTimeout(function(){
+
+                                      if(localStorage.getItem('sft_llamada') != null){
+                                                   $('#telefono-contestado').css('display','block');
+                                                   console.log(localStorage.getItem('sft_llamada'));
+                                                    $('#num-llama').html(localStorage.getItem('sft_llamada'));
+                                                   $('#number').html(localStorage.getItem('sft_llamada'));
+                                                   $('#horas').val(localStorage.getItem('sft_hor'));
+                                                   $('#minutos').val( localStorage.getItem('sft_min'));
+                                                   $('#segundos').val( localStorage.getItem('sft_seg'));
+                                                   $("#btncolllam").removeAttr("disabled");
+                                                   $('#colgado').val("false");
+                                                   $('#palabraDF').html($('#palabraD').html());
+                                                   $("#btncolllam").removeAttr("disabled");
+                                                   if (localStorage.getItem('sft_seg') != '00'){
+                                                       callEstablished();
+                                                   }
+                                      }else{
+                                          $('#inicio').css('display','block');
+                                          Colombia();
+                                        //  join.initialize();
+                                        //  pol.initialize();
+                                        
+                                          loadIndiLlamar();
+                                          ShowSaldo();
+                                         Historial();
+                                          navigator.proximity.disableSensor();
+                                      }
+                                    },900);
+                             }
+                        });    
+                           
+                      </script>
+                </div>
+                <div id="historial" class="cols" style="display:none">
+                        <p>Historial</p>
+                </div>
+        </div>
+        <div class="row" id="telefono-contestado" style="position:fixed;width:100%;height:100%;top:0;left:0;z-index:100000;background:white;display:none">
+            <center>
+                <div style="width:100%;background:#89B137;margin-top:20px" id="palabraDF" class="col s12">
+                    
+                </div>
+                <div class="col s12" id="p_valor" style="margin-top:5px"></div>
+                <p style="color:#000;float:right;margin-right:10px;font-size:30px;margin-top:10px" id="dtmf"></p>
+              </center>
+              <div class="col s12 row" >
+                <center>
+                  <div  id="opciones">
+                    <h5 style="font-style:italic ;font-family: GillSans, Calibri, Trebuchet, sans-serif;color:#4470B4;" id="num-llama"></h5>
+                    
+                    <div class="col s12"><span></span></div>
+                  </div>
+                  <div class="col s12 img-back">
+                      <center>  
+                        <div id="time-llama" style="color:#ADACB2;">
+                            <div class="progress" style="color:#000;background:#D0E86F;">
+                              <div class="indeterminate" style="color:#000;background:#4470B4;"></div>
+                            </div>
+                        </div> 
+                      </center>
+                    </div>
+                  <div class="col s12" id="tecladopequeno" style="display:none">
+                      <center>
+                          <div class="col s4" onclick="Dtmf('1')">
+                              <img src="img/1.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s4" onclick="Dtmf('2')">
+                              <img src="img/2.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s4" onclick="Dtmf('3')">
+                              <img src="img/3.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s12"></div>
+                          <div class="col s4" onclick="Dtmf('4')" style="margin-top:3px">
+                              <img src="img/4.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s4" onclick="Dtmf('5')" style="margin-top:3px">
+                              <img src="img/5.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s4" onclick="Dtmf('6')" style="margin-top:3px">
+                              <img src="img/6.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s12"></div> 
+                          <div class="col s4" onclick="Dtmf('7')" style="margin-top:3px">
+                              <img src="img/7.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s4" onclick="Dtmf('8')" style="margin-top:3px">
+                              <img src="img/8.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s4" onclick="Dtmf('9')" style="margin-top:3px">
+                              <img src="img/9.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s12"></div>
+                          <div class="col s4" onclick="Dtmf('*')" style="margin-top:3px">
+                             <img src="img/x.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s4" onclick="Dtmf('0')" style="margin-top:3px">
+                             <img src="img/0.png" class="img-responsive img-cirD" >
+                          </div>
+                          <div class="col s4" onclick="Dtmf('#')" style="margin-top:3px">
+                            <img src="img/nu.png" class="img-responsive img-cirD" >
+                          </div>
+                      </center>
+                  </div>
+                  <div class="col s12" id="contacs" style="display: none">
+                      <center>
+                          <div class="col s12">
+                              <a class="btn-floating btn waves-effect waves-light " style="background:#fff;color:#333 ;border:1px solid #9e9e9e" onclick="OcultarTeclado()"><i class="material-icons" style="color:#333">&#xE318;</i></a>
+                              <br><br>
+                              <div id="htCons" style="overflow-y: auto;min-height: 1000px"></div>
+                          </div>
+                      </center>
+                  </div>
+                  <div class="fixed-action-btn" style="margin: auto;bottom: 10px;left:0;width:100%" id="colgar-di">
+                      
+                      <div class="col s4" id="speaker">    
+                          <a class="btn-floating btn-large waves-effect waves-light" style="background:#fff;border:1px solid #ADACB2;width:68px;height:68.5px;font-size:45px;" onclick="ActivarParlante()"> <i class="material-icons" style="color:#ADACB2;font-size:45px;margin-top:5px" >&#xE050;</i> </a>
+                      </div>
+                      <div class="col s4" >
+                          <button class="btn-floating  btn-large waves-effect waves-light red darken-4" style="color:#fff32;width:68px;height:68.5px;font-size:50px;font-weight: bold;display: block" onclick="Colgar()" id="btncolllam" ><i class="material-icons" style="color:#fff32;font-size:42px;"  >&#xE0B1;</i></button>
+                      </div>
+                      <div class="col s4" id="touchdtmf">
+                          <button class="btn-floating btn-large waves-effect waves-light" style="background:#fff;border:1px solid #ADACB2;width:68px;height:68.5px;font-size:45px;" onclick="TecladoPequeno()"  >  <i class="material-icons" style="color:#ADACB2;font-size:40px;"  >&#xE0BC;</i></button>
+                      </div>
+                  </div>
+                </center>
+              </div>
+        </div>
+    </body>
+</html>

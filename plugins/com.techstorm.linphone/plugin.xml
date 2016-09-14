@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="com.techstorm.linphone"
+    version="0.0.1">
+    
+    <name>LinphonePlugin</name>
+    <description>LinphonePlugin Description</description>
+    <author>TechStorm</author>
+    <license>Apache 2.0 License</license>
+    <!-- cordova -->
+    <engines>
+        <engine name="cordova" version=">=3.6.0" />
+        <engine name="cordova-plugman" version=">=4.3.0" />
+        <engine name="cordova-windows" version=">=4.2.0" />
+    </engines>
+    
+    <js-module src="www/linphone.js" name="LinphonePlugin">
+        <clobbers target="Linphone" />
+    </js-module>
+    
+    <hook type="after_plugin_install" src="AfterPluginInstall.js" />
+    <hook type="before_plugin_uninstall" src="BeforePluginUninstall.js" />
+    
+    <platform name="android">
+        <framework src="com.android.support:support-v4:+" value="gradle" />
+        
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="LinphonePlugin">
+                <param name="android-package" value="com.techstorm.LinphonePlugin"/>
+            </feature>
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service android:name="org.linphone.LinphoneService"
+            android:stopWithTask="false"/>
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+            <uses-permission android:name="android.permission.READ_CONTACTS"/>
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.WAKE_LOCK"/>
+            <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+            <uses-permission android:name="android.permission.CALL_PHONE"/>
+            <!-- Needed to allow Linphone to install on tablets, since android.permission.CALL_PHONE implies android.hardware.telephony is required -->
+            <uses-feature 	 android:name="android.hardware.telephony" android:required="false" />
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+            <uses-permission android:name="android.permission.VIBRATE"/>
+            <uses-permission android:name="android.permission.CAMERA" />
+            <!-- Needed to allow Linphone to install on tablets, since android.permission.CAMERA implies android.hardware.camera and android.hardware.camera.autofocus are required -->
+            <uses-feature 	 android:name="android.hardware.camera" android:required="false" />
+            <uses-permission android:name="android.permission.READ_LOGS" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <!-- Needed to store received images if the user wants to -->
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <!-- Needed to use our own Contact editor -->
+            <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+            <!-- Needed to route the audio to the bluetooth headset if available -->
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+            <!-- Needed to pre fill the wizard email field (only if enabled in custom settings) -->
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+            <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+            <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+            <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+        </config-file>
+        <source-file src="src/android/libs/gcm.jar" target-dir="libs" framework="true" />
+        
+        <source-file src="src/android/libs/armeabi/libbctoolbox-armeabi.so" target-dir="libs/armeabi" framework="true" />
+        <source-file src="src/android/libs/armeabi/libbctoolbox-tester-armeabi.so" target-dir="libs/armeabi" framework="true" />
+        <source-file src="src/android/libs/armeabi/liblinphone-armeabi.so" target-dir="libs/armeabi" framework="true" />
+        <source-file src="src/android/libs/armeabi/liblinphonetester-armeabi.so" target-dir="libs/armeabi" framework="true" />
+        <source-file src="src/android/libs/armeabi/libmediastreamer_base-armeabi.so" target-dir="libs/armeabi" framework="true" />
+        <source-file src="src/android/libs/armeabi/libmediastreamer_voip-armeabi.so" target-dir="libs/armeabi" framework="true" />
+        <source-file src="src/android/libs/armeabi/libmssilk.so" target-dir="libs/armeabi" framework="true" />
+        <source-file src="src/android/libs/armeabi/libmswebrtc.so" target-dir="libs/armeabi" framework="true" />
+        <source-file src="src/android/libs/armeabi/libortp-armeabi.so" target-dir="libs/armeabi" framework="true" />
+        
+        <source-file src="src/android/libs/armeabi-v7a/libbctoolbox-armeabi-v7a.so" target-dir="libs/armeabi-v7a" framework="true" />
+        <source-file src="src/android/libs/armeabi-v7a/libbctoolbox-tester-armeabi-v7a.so" target-dir="libs/armeabi-v7a" framework="true" />
+        <source-file src="src/android/libs/armeabi-v7a/libffmpeg-linphone-armeabi-v7a.so" target-dir="libs/armeabi-v7a" framework="true" />
+        <source-file src="src/android/libs/armeabi-v7a/liblinphone-armeabi-v7a.so" target-dir="libs/armeabi-v7a" framework="true" />
+        <source-file src="src/android/libs/armeabi-v7a/liblinphonetester-armeabi-v7a.so" target-dir="libs/armeabi-v7a" framework="true" />
+        <source-file src="src/android/libs/armeabi-v7a/libmediastreamer_base-armeabi-v7a.so" target-dir="libs/armeabi-v7a" framework="true" />
+        <source-file src="src/android/libs/armeabi-v7a/libmediastreamer_voip-armeabi-v7a.so" target-dir="libs/armeabi-v7a" framework="true" />
+        <source-file src="src/android/libs/armeabi-v7a/libmssilk.so" target-dir="libs/armeabi-v7a" framework="true" />
+        <source-file src="src/android/libs/armeabi-v7a/libmswebrtc.so" target-dir="libs/armeabi-v7a" framework="true" />
+        <source-file src="src/android/libs/armeabi-v7a/libortp-armeabi-v7a.so" target-dir="libs/armeabi-v7a" framework="true" />
+        
+        <source-file src="src/android/libs/x86/libbctoolbox-tester-x86.so" target-dir="libs/x86" framework="true" />
+        <source-file src="src/android/libs/x86/libbctoolbox-x86.so" target-dir="libs/x86" framework="true" />
+        <source-file src="src/android/libs/x86/libffmpeg-linphone-x86.so" target-dir="libs/x86" framework="true" />
+        <source-file src="src/android/libs/x86/liblinphone-x86.so" target-dir="libs/x86" framework="true" />
+        <source-file src="src/android/libs/x86/liblinphonetester-x86.so" target-dir="libs/x86" framework="true" />
+        <source-file src="src/android/libs/x86/libmediastreamer_base-x86.so" target-dir="libs/x86" framework="true" />
+        <source-file src="src/android/libs/x86/libmediastreamer_voip-x86.so" target-dir="libs/x86" framework="true" />
+        <source-file src="src/android/libs/x86/libmssilk.so" target-dir="libs/x86" framework="true" />
+        <source-file src="src/android/libs/x86/libmswebrtc.so" target-dir="libs/x86" framework="true" />
+        <source-file src="src/android/libs/x86/libortp-x86.so" target-dir="libs/x86" framework="true" />
+        
+        <source-file src="src/android/de/timroes/axmlrpc/AuthenticationManager.java" target-dir="src/de/timroes/axmlrpc" />
+        <source-file src="src/android/de/timroes/axmlrpc/Call.java" target-dir="src/de/timroes/axmlrpc" />
+        <source-file src="src/android/de/timroes/axmlrpc/CookieManager.java" target-dir="src/de/timroes/axmlrpc" />
+        <source-file src="src/android/de/timroes/axmlrpc/ResponseParser.java" target-dir="src/de/timroes/axmlrpc" />
+        <source-file src="src/android/de/timroes/axmlrpc/XMLRPCCallback.java" target-dir="src/de/timroes/axmlrpc" />
+        <source-file src="src/android/de/timroes/axmlrpc/XMLRPCClient.java" target-dir="src/de/timroes/axmlrpc" />
+        <source-file src="src/android/de/timroes/axmlrpc/XMLRPCException.java" target-dir="src/de/timroes/axmlrpc" />
+        <source-file src="src/android/de/timroes/axmlrpc/XMLRPCRuntimeException.java" target-dir="src/de/timroes/axmlrpc" />
+        <source-file src="src/android/de/timroes/axmlrpc/XMLRPCServerException.java" target-dir="src/de/timroes/axmlrpc" />
+        <source-file src="src/android/de/timroes/axmlrpc/XMLUtil.java" target-dir="src/de/timroes/axmlrpc" />
+        
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/ArraySerializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/Base64Serializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/BooleanSerializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/DateTimeSerializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/DoubleSerializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/IntSerializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/LongSerializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/NullSerializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/Serializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/SerializerHandler.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/StringSerializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        <source-file src="src/android/de/timroes/axmlrpc/serializer/StructSerializer.java" target-dir="src/de/timroes/axmlrpc/serializer" />
+        
+        <source-file src="src/android/de/timroes/axmlrpc/xmlcreator/SimpleXMLCreator.java" target-dir="src/de/timroes/axmlrpc/xmlcreator" />
+        <source-file src="src/android/de/timroes/axmlrpc/xmlcreator/XmlElement.java" target-dir="src/de/timroes/axmlrpc/xmlcreator" />
+        
+        <source-file src="src/android/de/timroes/base64/Base64.java" target-dir="src/de/timroes/base64" />
+        
+        <source-file src="src/android/org/linphone/core/ErrorInfoImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneAddressImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneAuthInfoImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneBufferImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCallImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCallLogImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCallParamsImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCallStatsImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneChatMessageImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneChatRoomImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneConferenceImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneConferenceParamsImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneContentImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCoreFactoryImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCoreImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneEventImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneFriendImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneFriendListImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneInfoMessageImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphonePlayerImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneProxyConfigImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LpConfigImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PayloadTypeImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceActivityImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceModelImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceNoteImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresencePersonImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceServiceImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/TunnelConfigImpl.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/video/VideoUtil.java" target-dir="src/org/linphone/core/video" />
+        <source-file src="src/android/org/linphone/tools/Lpc2Xml.java" target-dir="src/org/linphone/tools" />
+        <source-file src="src/android/org/linphone/tools/Xml2Lpc.java" target-dir="src/org/linphone/tools" />
+        <source-file src="src/android/org/linphone/core/LinphoneCoreException.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/CallDirection.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/ErrorInfo.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneAddress.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneAuthInfo.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneBuffer.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCall.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCallLog.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCallParams.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCallStats.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneChatMessage.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneChatRoom.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneConference.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneConferenceParams.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneContent.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCore.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCoreFactory.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCoreListener.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneCoreListenerBase.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneEvent.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneFriend.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneFriendList.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneInfoMessage.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneLogHandler.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphonePlayer.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LinphoneProxyConfig.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/LpConfig.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/OnlineStatus.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PayloadType.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceActivity.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceActivityType.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceBasicStatus.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceModel.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceNote.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresencePerson.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PresenceService.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/Privacy.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/PublishState.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/Reason.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/SubscriptionDir.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/SubscriptionState.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/ToneID.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/TunnelConfig.java" target-dir="src/org/linphone/core" />
+        <source-file src="src/android/org/linphone/core/VideoSize.java" target-dir="src/org/linphone/core" />
+        
+        
+        <source-file src="src/android/org/linphone/mediastream/AACFilter.java" target-dir="src/org/linphone/mediastream" />
+        <source-file src="src/android/org/linphone/mediastream/Factory.java" target-dir="src/org/linphone/mediastream" />
+        <source-file src="src/android/org/linphone/mediastream/Log.java" target-dir="src/org/linphone/mediastream" />
+        <source-file src="src/android/org/linphone/mediastream/MediastreamerAndroidContext.java" target-dir="src/org/linphone/mediastream" />
+        <source-file src="src/android/org/linphone/mediastream/MediastreamException.java" target-dir="src/org/linphone/mediastream" />
+        <source-file src="src/android/org/linphone/mediastream/Version.java" target-dir="src/org/linphone/mediastream" />
+        <source-file src="src/android/org/linphone/mediastream/video/AndroidVideoWindowImpl.java" target-dir="src/org/linphone/mediastream/video" />
+        <source-file src="src/android/org/linphone/mediastream/video/capture/AndroidVideoApi5JniWrapper.java" target-dir="src/org/linphone/mediastream/video/capture" />
+        <source-file src="src/android/org/linphone/mediastream/video/capture/AndroidVideoApi8JniWrapper.java" target-dir="src/org/linphone/mediastream/video/capture" />
+        <source-file src="src/android/org/linphone/mediastream/video/capture/AndroidVideoApi9JniWrapper.java" target-dir="src/org/linphone/mediastream/video/capture" />
+        <source-file src="src/android/org/linphone/mediastream/video/capture/hwconf/AndroidCameraConfiguration.java" target-dir="src/org/linphone/mediastream/video/capture/hwconf" />
+        <source-file src="src/android/org/linphone/mediastream/video/capture/hwconf/AndroidCameraConfigurationReader5.java" target-dir="src/org/linphone/mediastream/video/capture/hwconf" />
+        <source-file src="src/android/org/linphone/mediastream/video/capture/hwconf/AndroidCameraConfigurationReader9.java" target-dir="src/org/linphone/mediastream/video/capture/hwconf" />
+        <source-file src="src/android/org/linphone/mediastream/video/capture/hwconf/AndroidCameraConfigurationReader21.java" target-dir="src/org/linphone/mediastream/video/capture/hwconf" />
+        <source-file src="src/android/org/linphone/mediastream/video/capture/hwconf/Hacks.java" target-dir="src/org/linphone/mediastream/video/capture/hwconf" />
+        
+        <source-file src="src/android/org/linphone/mediastream/video/display/GL2JNIView.java" target-dir="src/org/linphone/mediastream/video/display" />
+        <source-file src="src/android/org/linphone/mediastream/video/display/OpenGLESDisplay.java" target-dir="src/org/linphone/mediastream/video/display" />
+        
+        <source-file src="src/android/org/linphone/BandwidthManager.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/BluetoothManager.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/BootReceiver.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/CallManager.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/ChatMessage.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/ChatStorage.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/Contact.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/ContactsManager.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/FragmentsAvailable.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/KeepAliveHandler.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/KeepAliveReceiver.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/LinphoneContact.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/LinphoneException.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/LinphoneLauncherActivity.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/LinphoneManager.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/LinphoneNumberOrAddress.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/LinphonePreferences.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/LinphoneService.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/LinphoneUtils.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/NetworkManager.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/OpenGLESDisplay.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/PhoneStateChangedReceiver.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/PreferencesMigrator.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/UIThreadDispatcher.java" target-dir="src/org/linphone" />
+        <source-file src="src/android/org/linphone/compatibility/ApiEightPlus.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/compatibility/ApiElevenPlus.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/compatibility/ApiFivePlus.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/compatibility/ApiFourteenPlus.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/compatibility/ApiNinePlus.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/compatibility/ApiSixteenPlus.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/compatibility/ApiTwentyOnePlus.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/compatibility/Compatibility.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/compatibility/CompatibilityScaleGestureDetector.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/compatibility/CompatibilityScaleGestureListener.java" target-dir="src/org/linphone/compatibility" />
+        <source-file src="src/android/org/linphone/gcm/GCMReceiver.java" target-dir="src/org/linphone/gcm" />
+        <source-file src="src/android/org/linphone/gcm/GCMService.java" target-dir="src/org/linphone/gcm" />
+        <source-file src="src/android/org/linphone/sync/AuthenticationService.java" target-dir="src/org/linphone/sync" />
+        <source-file src="src/android/org/linphone/sync/Authenticator.java" target-dir="src/org/linphone/sync" />
+        <source-file src="src/android/org/linphone/sync/SyncAdapter.java" target-dir="src/org/linphone/sync" />
+        <source-file src="src/android/org/linphone/sync/SyncService.java" target-dir="src/org/linphone/sync" />
+        <source-file src="src/android/org/linphone/xmlrpc/XmlRpcHelper.java" target-dir="src/org/linphone/xmlrpc" />
+        <source-file src="src/android/org/linphone/xmlrpc/XmlRpcListener.java" target-dir="src/org/linphone/xmlrpc" />
+        <source-file src="src/android/org/linphone/xmlrpc/XmlRpcListenerBase.java" target-dir="src/org/linphone/xmlrpc" />
+        
+        <resource-file src="src/android/res/values/non_localizable_custom.xml" target="res/values/non_localizable_custom.xml" />
+        
+        <resource-file src="src/android/res/raw/hold.mkv" target="res/raw/hold.mkv" />
+        <resource-file src="src/android/res/raw/incoming_chat.wav" target="res/raw/incoming_chat.wav" />
+        <resource-file src="src/android/res/raw/linphonerc_default" target="res/raw/linphonerc_default" />
+        <resource-file src="src/android/res/raw/linphonerc_factory" target="res/raw/linphonerc_factory" />
+        <resource-file src="src/android/res/raw/lpconfig.xsd" target="res/raw/lpconfig.xsd" />
+        <resource-file src="src/android/res/raw/oldphone_mono.wav" target="res/raw/oldphone_mono.wav" />
+        <resource-file src="src/android/res/raw/ringback.wav" target="res/raw/ringback.wav" />
+        <resource-file src="src/android/res/raw/rootca.pem" target="res/raw/rootca.pem" />
+        
+        <resource-file src="src/android/res/xml/authenticator.xml" target="res/xml/authenticator.xml" />
+        <resource-file src="src/android/res/xml/contacts.xml" target="res/xml/contacts.xml" />
+        <resource-file src="src/android/res/xml/syncadapter.xml" target="res/xml/syncadapter.xml" />
+        
+        <source-file src="src/android/com/techstorm/LinphonePlugin.java" target-dir="src/com/techstorm" />
+        <source-file src="src/android/com/techstorm/LinphoneHelper.java" target-dir="src/com/techstorm" />
+        <source-file src="src/android/com/techstorm/Constants.java" target-dir="src/com/techstorm" />
+        
+        <source-file src="src/android/com/techstorm/objects/TTLinphoneAddress.java" target-dir="src/com/techstorm/objects" />
+        <source-file src="src/android/com/techstorm/objects/TTPresenceActivity.java" target-dir="src/com/techstorm/objects" />
+        <source-file src="src/android/com/techstorm/objects/TTPresenceNote.java" target-dir="src/com/techstorm/objects" />
+        <source-file src="src/android/com/techstorm/objects/TTPresencePerson.java" target-dir="src/com/techstorm/objects" />
+        <source-file src="src/android/com/techstorm/objects/TTPresenceService.java" target-dir="src/com/techstorm/objects" />
+        
+        
+    </platform>
+    
+    <platform name="ios">
+        
+        <config-file target="config.xml" parent="/widget">
+            <feature name="LinphonePlugin">
+                <param name="ios-package" value="LinphonePlugin" />
+            </feature>
+        </config-file>
+        
+        <header-file src="src/ios/Classes/LinphoneManager.h" />
+        <source-file src="src/ios/Classes/LinphoneManager.m" />
+        <header-file src="src/ios/Classes/LinphoneCoreSettingsStore.h" />
+        <source-file src="src/ios/Classes/LinphoneCoreSettingsStore.m" />
+        
+        <header-file src="src/ios/Classes/TTCallLog.h" />
+        <source-file src="src/ios/Classes/TTCallLog.m" />
+        <header-file src="src/ios/Classes/TTLinphoneAddress.h" />
+        <source-file src="src/ios/Classes/TTLinphoneAddress.m" />
+        <header-file src="src/ios/Classes/TTLinphoneCallDir.h" />
+        <source-file src="src/ios/Classes/TTLinphoneCallDir.m" />
+        <header-file src="src/ios/Classes/TTLinphoneCallStatus.h" />
+        <source-file src="src/ios/Classes/TTLinphoneCallStatus.m" />
+        <header-file src="src/ios/Classes/TTRange.h" />
+        <source-file src="src/ios/Classes/TTRange.m" />
+        <header-file src="src/ios/Classes/TTLinphoneUpnpState.h" />
+        <source-file src="src/ios/Classes/TTLinphoneUpnpState.m" />
+        <header-file src="src/ios/Classes/TTLinphoneMediaEncryption.h" />
+        <source-file src="src/ios/Classes/TTLinphoneMediaEncryption.m" />
+        <header-file src="src/ios/Classes/TTLinphoneIceState.h" />
+        <source-file src="src/ios/Classes/TTLinphoneIceState.m" />
+        <header-file src="src/ios/Classes/TTLinphoneCallStats.h" />
+        <source-file src="src/ios/Classes/TTLinphoneCallStats.m" />
+        <header-file src="src/ios/Classes/TTLinphoneCallParams.h" />
+        <source-file src="src/ios/Classes/TTLinphoneCallParams.m" />
+        <header-file src="src/ios/Classes/TTChatInformation.h" />
+        <source-file src="src/ios/Classes/TTChatInformation.m" />
+        <header-file src="src/ios/Classes/TTConference.h" />
+        <source-file src="src/ios/Classes/TTConference.m" />
+        <header-file src="src/ios/Classes/TTLCSipTransports.h" />
+        <source-file src="src/ios/Classes/TTLCSipTransports.m" />
+        <header-file src="src/ios/Classes/TTLinphoneAVPFMode.h" />
+        <source-file src="src/ios/Classes/TTLinphoneAVPFMode.m" />
+        <header-file src="src/ios/Classes/TTLinphoneCall.h" />
+        <source-file src="src/ios/Classes/TTLinphoneCall.m" />
+        <header-file src="src/ios/Classes/TTLinphoneChatMessage.h" />
+        <source-file src="src/ios/Classes/TTLinphoneChatMessage.m" />
+        <header-file src="src/ios/Classes/TTLinphoneChatMessageCbs.h" />
+        <source-file src="src/ios/Classes/TTLinphoneChatMessageCbs.m" />
+        <header-file src="src/ios/Classes/TTLinphoneChatMessageState.h" />
+        <source-file src="src/ios/Classes/TTLinphoneChatMessageState.m" />
+        <header-file src="src/ios/Classes/TTLinphoneChatRoom.h" />
+        <source-file src="src/ios/Classes/TTLinphoneChatRoom.m" />
+        <header-file src="src/ios/Classes/TTLinphoneContent.h" />
+        <source-file src="src/ios/Classes/TTLinphoneContent.m" />
+        <header-file src="src/ios/Classes/TTLinphoneErrorInfo.h" />
+        <source-file src="src/ios/Classes/TTLinphoneErrorInfo.m" />
+        <header-file src="src/ios/Classes/TTLinphoneFirewallPolicy.h" />
+        <source-file src="src/ios/Classes/TTLinphoneFirewallPolicy.m" />
+        <header-file src="src/ios/Classes/TTLinphoneFriend.h" />
+        <source-file src="src/ios/Classes/TTLinphoneFriend.m" />
+        <header-file src="src/ios/Classes/TTLinphonePresenceActivity.h" />
+        <source-file src="src/ios/Classes/TTLinphonePresenceActivity.m" />
+        <header-file src="src/ios/Classes/TTLinphonePresenceActivityType.h" />
+        <source-file src="src/ios/Classes/TTLinphonePresenceActivityType.m" />
+        <header-file src="src/ios/Classes/TTLinphonePresenceBasicStatus.h" />
+        <source-file src="src/ios/Classes/TTLinphonePresenceBasicStatus.m" />
+        <header-file src="src/ios/Classes/TTLinphonePresenceModel.h" />
+        <source-file src="src/ios/Classes/TTLinphonePresenceModel.m" />
+        <header-file src="src/ios/Classes/TTLinphonePresenceNote.h" />
+        <source-file src="src/ios/Classes/TTLinphonePresenceNote.m" />
+        <header-file src="src/ios/Classes/TTLinphonePresencePerson.h" />
+        <source-file src="src/ios/Classes/TTLinphonePresencePerson.m" />
+        <header-file src="src/ios/Classes/TTLinphonePresenceService.h" />
+        <source-file src="src/ios/Classes/TTLinphonePresenceService.m" />
+        <header-file src="src/ios/Classes/TTLinphoneReason.h" />
+        <source-file src="src/ios/Classes/TTLinphoneReason.m" />
+        <header-file src="src/ios/Classes/TTLinphoneSubscribePolicy.h" />
+        <source-file src="src/ios/Classes/TTLinphoneSubscribePolicy.m" />
+        <header-file src="src/ios/Classes/TTLinphoneTransportType.h" />
+        <source-file src="src/ios/Classes/TTLinphoneTransportType.m" />
+        <header-file src="src/ios/Classes/TTMediaParameters.h" />
+        <source-file src="src/ios/Classes/TTMediaParameters.m" />
+        <header-file src="src/ios/Classes/TTMSVideoSize.h" />
+        <source-file src="src/ios/Classes/TTMSVideoSize.m" />
+        <header-file src="src/ios/Classes/TTNetworkParameters.h" />
+        <source-file src="src/ios/Classes/TTNetworkParameters.m" />
+        <header-file src="src/ios/Classes/TTPayloadType.h" />
+        <source-file src="src/ios/Classes/TTPayloadType.m" />
+        
+        
+        <header-file src="src/ios/Classes/Utils/Log.h" />
+        <source-file src="src/ios/Classes/Utils/Log.m" />
+        <header-file src="src/ios/Classes/Utils/FastAddressBook.h" />
+        <source-file src="src/ios/Classes/Utils/FastAddressBook.m" />
+        <header-file src="src/ios/Classes/Utils/Contact.h" />
+        <source-file src="src/ios/Classes/Utils/Contact.m" />
+        <header-file src="src/ios/Classes/Utils/FileTransferDelegate.h" />
+        <source-file src="src/ios/Classes/Utils/FileTransferDelegate.m" />
+        <header-file src="src/ios/Classes/Utils/Utils.h" />
+        <source-file src="src/ios/Classes/Utils/Utils.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Controllers/IASKSpecifierValuesViewController.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Controllers/IASKSpecifierValuesViewController.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Controllers/IASKViewController.h" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSettingsReader.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSettingsReader.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSettingsStore.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSettingsStore.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSettingsStoreFile.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSettingsStoreFile.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSettingsStoreUserDefaults.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSettingsStoreUserDefaults.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSpecifier.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Models/IASKSpecifier.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKPSSliderSpecifierViewCell.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKPSSliderSpecifierViewCell.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKPSTitleValueSpecifierViewCell.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKPSTitleValueSpecifierViewCell.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKSlider.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKSlider.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKSwitch.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKSwitch.m" />
+        <header-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKTextField.h" />
+        <source-file src="src/ios/Classes/Utils/InAppSettingsKit/Views/IASKTextField.m" />
+        <header-file src="src/ios/Classes/LinphoneIOSVersion.h" />
+        
+        
+        
+        <source-file src="src/ios/lib/libmbedcrypto.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libmbedtls.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libmbedx509.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libbelcard.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libbelr.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libbctoolbox-tester.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libbctoolbox.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libcorec.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libebml2.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libmatroska2.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libantlr3c.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libavcodec.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libavutil.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libbcg729.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libbellesip.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libbzrtp.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libgsm.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/liblinphone.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/liblinphonetester.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libmediastreamer_base.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libmediastreamer_voip.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/mediastreamer/plugins/libmsamr.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib/mediastreamer/plugins/" />
+        <source-file src="src/ios/lib/mediastreamer/plugins/libmsbcg729.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib/mediastreamer/plugins/" />
+        <source-file src="src/ios/lib/mediastreamer/plugins/libmsopenh264.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib/mediastreamer/plugins/" />
+        <source-file src="src/ios/lib/mediastreamer/plugins/libmssilk.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib/mediastreamer/plugins/" />
+        <source-file src="src/ios/lib/mediastreamer/plugins/libmswebrtc.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib/mediastreamer/plugins/" />
+        <source-file src="src/ios/lib/mediastreamer/plugins/libmsx264.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib/mediastreamer/plugins/" />
+        <source-file src="src/ios/lib/libopencore-amrnb.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libopencore-amrwb.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libopenh264.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libopus.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libortp.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libpolarssl.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libspeex.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libspeexdsp.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libsrtp.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libswresample.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libswscale.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libtunnel.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libvo-amrwbenc.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libvpx.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libx264.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libcunit.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        <source-file src="src/ios/lib/libbv16.a" framework="true" target-dir="liblinphone-sdk/apple-darwin/lib" />
+        
+        
+        <header-file src="src/ios/LinphonePlugin.h" target-dir="LinphonePlugin"/>
+        <source-file src="src/ios/LinphonePlugin.m" target-dir="LinphonePlugin" />
+        <header-file src="src/ios/LinphoneHelper.h" target-dir="LinphonePlugin"/>
+        <source-file src="src/ios/LinphoneHelper.m" target-dir="LinphonePlugin" />
+        <header-file src="src/ios/AppDelegate+linphone.h" target-dir="LinphonePlugin"/>
+        <source-file src="src/ios/AppDelegate+linphone.m" target-dir="LinphonePlugin"/>
+        
+        <framework src="VideoToolbox.framework" />
+        <framework src="AddressBook.framework" />
+        <framework src="AddressBookUI.framework" />
+        <framework src="AssetsLibrary.framework" />
+        <framework src="AudioToolbox.framework" />
+        <framework src="AVFoundation.framework" />
+        <framework src="CFNetwork.framework" />
+        <framework src="CoreAudio.framework" />
+        <framework src="CoreFoundation.framework" />
+        <framework src="CoreGraphics.framework" />
+        <framework src="CoreMedia.framework" />
+        <framework src="CoreTelephony.framework" />
+        <framework src="CoreVideo.framework" />
+        <framework src="Foundation.framework" />
+        <framework src="ImageIO.framework" />
+        <framework src="MediaPlayer.framework" />
+        <framework src="MessageUI.framework" />
+        <framework src="MobileCoreServices.framework" />
+        <framework src="OpenGLES.framework" />
+        <framework src="QuartzCore.framework" />
+        <framework src="Security.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="UIKit.framework" />
+        
+        <framework src="libiconv.tbd" />
+        <framework src="libsqlite3.tbd" />
+        <framework src="libxml2.tbd" />
+        <framework src="libz.tbd" />
+        <framework src="libstdc++.6.tbd" />
+        <framework src="libresolv.tbd" />
+        <framework src="libc++.1.tbd" />
+        
+        <resource-file src="src/ios/Resources/assistant_external_sip.rc" />
+        <resource-file src="src/ios/Resources/assistant_linphone_create.rc" />
+        <resource-file src="src/ios/Resources/assistant_linphone_existing.rc" />
+        <resource-file src="src/ios/Resources/assistant_remote.rc" />
+        <resource-file src="src/ios/Resources/linphonerc" />
+        <resource-file src="src/ios/Resources/linphonerc-factory" />
+        <resource-file src="src/ios/Resources/linphonerc~ipad" />
+        <resource-file src="src/ios/Resources/rootca.pem" />
+        <resource-file src="src/ios/Resources/sounds/hold.mkv" />
+        <resource-file src="src/ios/Resources/sounds/msg.caf" />
+        <resource-file src="src/ios/Resources/sounds/ringback.wav" />
+        <resource-file src="src/ios/Resources/sounds/shortring.caf" />
+        <resource-file src="src/ios/Resources/sounds/ringtones/notes_of_the_optimistic.caf" />
+    </platform>
+    
+</plugin>

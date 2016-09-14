@@ -1,0 +1,233 @@
+@import "compass/css3";
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,500);
+
+$color-gray: rgba(0, 0, 0, 0.5);
+$color-device: #262626;
+$color-device-bg: #111;
+$icon-width: 3.5rem;
+$header-height: 70px;
+
+* {
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+
+#device {
+  margin: 100px auto;
+  width: 350px;
+  height: 670px;
+  background-color: $color-device;
+  border: 1rem solid $color-device-bg;
+  border-bottom-width: 4rem;
+  border-top-width: 4rem;
+  border-top-left-radius: 50px 40px;
+  border-top-right-radius: 50px 40px;
+  border-bottom-left-radius: 50px 40px;
+  border-bottom-right-radius: 50px 40px;  
+  
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 10px;
+    background: white;
+    top: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  &:after {
+    top: calc(100% + 2rem);
+  }
+}
+
+header {
+  background: #efefef;
+  width: 100%;
+  height: $header-height;
+  
+  > * {
+    float: left;
+  }
+}
+
+#search {
+  @extend %transition;
+  width: calc(100% - #{2 * $icon-width});
+  height: 100%;
+  padding: 0.5rem;
+  
+  &:hover {
+    padding: 0;
+    width: 100%;
+    
+    ~ .actions > .action {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    
+    .action-close {
+      opacity: 1;
+      z-index: 9;
+      transition-delay: 0;
+    }
+  }
+}
+
+.actions {
+  width: 2 * $icon-width;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+%icon {
+  width: $icon-width;
+  height: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.3);
+  
+  &:before {
+      content: '';
+      height: 100%;
+      display: inline-block;
+      vertical-align: middle;
+      width: 1em;
+      margin-left: -1em;
+  }  
+}
+
+.action {
+  @extend %transition;
+  @extend %icon;
+  float: left;
+  transition-delay: 0.15s !important;
+  
+  + .action { transition-delay: 0.2s !important; }
+  
+  &-close {
+    @extend %transition;
+    @extend %icon;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+  }
+  
+  &.more {
+    z-index: 4;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    
+    &:after {
+      content: '\22ee';
+      vertical-align: middle;
+      font-weight: bold;
+    }
+    
+    &:focus {
+      outline: none;
+      color: #2196F3;
+    }
+    
+    &:focus + .sheet {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: initial;
+      
+      .action {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      
+      li {
+        margin-top: 0;
+        opacity: 1;
+      }
+    }
+  }
+  
+  > small {
+    font-size: 50%;
+    color: $color-gray;
+    border: 3px solid $color-gray;
+    border-radius: 3px;
+    padding: 0 0.25rem;
+    font-weight: 500;
+  }
+}
+
+.sheet {
+  @extend %transition;
+  pointer-events: none;
+  transition-duration: 0.1s;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.25rem;
+  width: 270px;
+  height: 530px;
+  background: white;
+  z-index: 3;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.7);
+  transform-origin: right top;
+  box-shadow: 0 0 6px $color-gray;
+  overflow-y: auto;
+  
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    @extend %transition;
+    transition-duration: 0.3s;
+    transition-delay: 0.1s;
+    list-style: none;
+    padding: 0.75rem 1rem;
+    font-weight: 300;
+    opacity: 0;
+    
+    + li { margin-top: -1rem; }
+  }
+  
+  header {
+    background: transparent;
+    top: -.25rem;
+  }
+  
+  .action {
+    @extend %transition;
+    width: 25%;
+    transform: translateX(50%);
+    opacity: 0;
+  }
+}
+
+section {
+  color: #efefef;
+  font-weight: 100;
+  text-align: center;
+  padding: 1rem;
+  line-height: 1.4;
+}
+
+%transition {
+  transition-property: all;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
